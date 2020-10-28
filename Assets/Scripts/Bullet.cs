@@ -1,6 +1,5 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -12,7 +11,6 @@ public class Bullet : MonoBehaviour
     public GameObject explosion;
 
     private float time;
-
     private Vector3 direction;
     
     public void Init(RaycastHit hitRay)
@@ -23,57 +21,66 @@ public class Bullet : MonoBehaviour
     
     private void Update()
     {
-        time += Time.deltaTime;
-        if (time > 20)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        
+        TryDestroyDelay();
+
         var previous = transform.position;
         transform.Translate(direction * Time.deltaTime * movementSpeed);
         var next = transform.position;
 
         if (Physics.Linecast(previous, next, out var raycastHit))
         {
-            var vfx = Instantiate(explosion);
-            vfx.transform.position = raycastHit.point;
-            vfx.transform.localScale = Vector3.one * hitRange;
-            
-            var direction = (raycastHit.point - Camera.main.ScreenToWorldPoint(Input.mousePosition)).normalized;
-            var hitDirection = direction * hitRange;
+            CreatExplosion(raycastHit);
+            var pieces = new List<MeshDestroy.PartMeshData>();
 
             var colliders = Physics.OverlapSphere(raycastHit.point, hitRange);
-            var pieces = new List<GameObject>();
-            foreach (var collider in colliders)
+            foreach (var coll in colliders)
             {
-                if (!collider.transform.CompareTag("Environment") &&
-                    collider.gameObject != raycastHit.transform.gameObject)
+                if (!coll.transform.CompareTag("Environment") && coll.gameObject != raycastHit.transform.gameObject)
                 {
-                    pieces.Add(collider.gameObject);
-                    if (collider.GetComponent<Rigidbody>().mass > MeshDestroy.minMassDestroy)
-                    {
-                        MeshDestroy.BreakGameObject(collider.transform.gameObject, raycastHit.point, collider.transform.position - raycastHit.transform.position);
-                    }
+                    var breakVector = coll.transform.position - raycastHit.transform.position;
+                    var meshes = MeshDestroy.BreakGameObject(coll.transform.gameObject, raycastHit.point, breakVector);
+                    foreach (var mesh in meshes) pieces.Add(mesh);
+                    pieces.Add(MeshDestroy.CreatePartMeshData(coll.gameObject));
                 }
-            }
-
-            if (!raycastHit.transform.CompareTag("Environment"))
-            {
-                pieces.Add(raycastHit.transform.gameObject);
-                if (raycastHit.transform.GetComponent<Rigidbody>().mass > MeshDestroy.minMassDestroy)
-                {
-                    MeshDestroy.BreakGameObject(raycastHit.transform.gameObject, raycastHit.point, hitDirection);
-                }
-            }
-
-            foreach (var piece in pieces)
-            {
-                var rb = piece.gameObject.GetComponent<Rigidbody>();
-                rb.velocity += (piece.transform.position - raycastHit.point).normalized * hitPower;
             }
             
+            if (!raycastHit.transform.CompareTag("Environment"))
+            {
+                var breakVectorNorm = (raycastHit.point - Camera.main.ScreenToWorldPoint(Input.mousePosition)).normalized;
+                var breakVector = breakVectorNorm * hitRange;
+                var meshes = MeshDestroy.BreakGameObject(raycastHit.transform.gameObject, raycastHit.point, breakVector);
+                foreach (var mesh in meshes) pieces.Add(mesh);
+                pieces.Add(MeshDestroy.CreatePartMeshData(raycastHit.transform.gameObject));
+            }
+            
+            ApplyForceToPieces(pieces, raycastHit.point);
+        }
+    }
+
+    private void TryDestroyDelay()
+    {
+        time += Time.deltaTime;
+        if (time > 20f)
+        {
             Destroy(gameObject);
         }
+    }
+
+    private void CreatExplosion(RaycastHit raycastHit)
+    {
+        var vfx = Instantiate(explosion);
+        vfx.transform.position = raycastHit.point;
+        vfx.transform.localScale = Vector3.one * hitRange;
+    }
+
+    private void ApplyForceToPieces(List<MeshDestroy.PartMeshData> pieces, Vector3 hitpoint)
+    {
+        foreach (var piece in pieces)
+        {
+            var rb = piece.gameObject.GetComponent<Rigidbody>();
+            if (!rb.isKinematic) rb.velocity += (piece.MeshWorldCenter - hitpoint).normalized * hitPower;
+        }
+        
+        Destroy(gameObject);
     }
 }

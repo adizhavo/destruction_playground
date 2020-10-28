@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3604570104971860384}
   m_Layer: 0
-  m_Name: prefab_turret_2
+  m_Name: prefab_turret_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3604570104971429250}
-  m_Mesh: {fileID: 4300000, guid: 2c0bf807fbc4a45ddb6278a1c4aca672, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 1b90e100e327043eaab6a9a892c72205, type: 3}
 --- !u!23 &3604570104973630274
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -90,7 +90,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 84876d74d15f84dd98c5ecedae8ac5db, type: 2}
+  - {fileID: 2100000, guid: 7098581b06ca042368fa90b36b782659, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -139,4 +139,4 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 2c0bf807fbc4a45ddb6278a1c4aca672, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 1b90e100e327043eaab6a9a892c72205, type: 3}

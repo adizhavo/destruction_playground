@@ -1,122 +1,157 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MeshDestroy
 {
-    private static bool edgeSet = false;
-    private static Vector3 edgeVertex = Vector3.zero;
-    private static Vector2 edgeUV = Vector2.zero;
-    private static Plane edgePlane = new Plane();
-
+    // Configs
     public static float minRigidbodyMassKinetic = 2f;
     public static float minMassDestroy= 0.7f;
     public static float minRigidbodyQuickDestroy = 0.2f;
     public static int subBreakCount = 2;
+    public static float boundaryMassMult = 1f;
+    
+    private static bool edgeSet = false;
+    private static Vector3 edgeVertex = Vector3.zero;
+    private static Plane edgePlane = new Plane();
 
-    public static List<PartMesh> BreakGameObject(GameObject hitGameObject, Vector3 hitPoint, Vector3 direction, bool subBreak = true)
+    public static List<PartMeshData> BreakGameObject(GameObject gameObject, Vector3 breakPoint, Vector3 breakVector, bool subBreak = true)
     {
-        var spawnedParts = new List<PartMesh>();
-        var hitPointParts = GenerateHitPointCutMesh(hitGameObject, hitPoint, direction);
-        if (hitPointParts.Count > 0)
+        var spawnedPartMeshDatas = new List<PartMeshData>();
+        if (gameObject.GetComponent<Rigidbody>().mass > minMassDestroy)
         {
-            SpawnParts(hitGameObject, hitPointParts);
-            spawnedParts.AddRange(hitPointParts);
-            if (subBreak)
+            // breakVector is the normal vector from which a plan will be created to cut the game object
+            // the length of the vector defines how deep will the mesh be cut
+            var partMesheDatas = GeneratePartMeshes(gameObject, breakPoint, breakVector);
+            if (partMesheDatas.Count > 0)
             {
-                var closestPart = GetClosestPartToHitPoint(hitPoint, hitPointParts);
-                if (closestPart != null)
+                SpawnParts(gameObject, partMesheDatas);
+                spawnedPartMeshDatas.AddRange(partMesheDatas);
+                Object.Destroy(gameObject);
+                
+                if (subBreak)
                 {
-                    var randomParts = GenerateRandomCutMesh(closestPart.gameObject, subBreakCount);
-                    if (randomParts.Count > 0)
+                    // subbreak the closes 3d model into more fine pieces
+                    var closestPartMesh = GetClosestPartMeshDataToPos(breakPoint, partMesheDatas);
+                    if (closestPartMesh != null)
                     {
-                        SpawnParts(closestPart.gameObject, randomParts);
-                        spawnedParts.Remove(closestPart);
-                        spawnedParts.AddRange(randomParts);
+                        var randomPartMeshDatas = GenerateRandomPartMeshes(closestPartMesh.gameObject, subBreakCount);
+                        if (randomPartMeshDatas.Count > 0)
+                        {
+                            SpawnParts(closestPartMesh.gameObject, randomPartMeshDatas);
+                            spawnedPartMeshDatas.Remove(closestPartMesh);
+                            spawnedPartMeshDatas.AddRange(randomPartMeshDatas);
+                            Object.Destroy(closestPartMesh.gameObject);
+                        }
                     }
                 }
             }
-        }
-        else
-        {
-            var randomParts = GenerateRandomCutMesh(hitGameObject.gameObject, subBreakCount + 1);
-            if (randomParts.Count > 0)
+            else
             {
-                SpawnParts(hitGameObject.gameObject, randomParts);
-                spawnedParts.AddRange(randomParts);
+                // If the plan doesn't cut any 3D verts then simply make random cuts in the model
+                var randomPartMeshes = GenerateRandomPartMeshes(gameObject, subBreakCount + 1);
+                if (randomPartMeshes.Count > 0)
+                {
+                    SpawnParts(gameObject, randomPartMeshes);
+                    spawnedPartMeshDatas.AddRange(randomPartMeshes);
+                    Object.Destroy(gameObject);
+                }
             }
-        }
-        
-        foreach (var part in spawnedParts)
-        {
-            var rigidBody = part.gameObject.GetComponent<Rigidbody>();
-            if (rigidBody.mass > minRigidbodyMassKinetic && rigidBody.velocity.sqrMagnitude < 0.5f) rigidBody.isKinematic = true;
-            if (rigidBody.mass < minMassDestroy) part.gameObject.AddComponent<ClearGameObject>().SetWaiTime(20f);
-            if (rigidBody.mass < minRigidbodyQuickDestroy) part.gameObject.AddComponent<ClearGameObject>().SetWaiTime(5f);
+
+            TryCleanupPartMeshDatas(spawnedPartMeshDatas);
         }
 
-        return spawnedParts;
+        return spawnedPartMeshDatas;
+    }
+    
+    // Create the mesh data structure from a game object
+    public static PartMeshData CreatePartMeshData(GameObject gameObject)
+    {
+        var mesh = gameObject.GetComponent<MeshFilter>().mesh;
+        mesh.RecalculateBounds();
+
+        var partMeshData = new PartMeshData
+        {
+            UV = mesh.uv,
+            Vertices = mesh.vertices,
+            Normals = mesh.normals,
+            Triangles = new int[mesh.subMeshCount][],
+            gameObject = gameObject
+        };
+        
+        for (int i = 0; i < mesh.subMeshCount; i++)
+            partMeshData.Triangles[i] = mesh.GetTriangles(i);
+
+        return partMeshData;
     }
 
-    private static List<PartMesh> GenerateHitPointCutMesh(GameObject cutGameObject, Vector3 hitPoint, Vector3 direction)
+    private static void TryCleanupPartMeshDatas(List<PartMeshData> spawnedPartMeshDatas)
     {
-        var parts = CreatePartMeshData(cutGameObject);
-        var planePoint = hitPoint + direction;
+        // Set the property of the resut rigid bodies
+        // Fade out and clear the smaller pieces for performance
+        foreach (var part in spawnedPartMeshDatas)
+        {
+            var rigidBody = part.gameObject.GetComponent<Rigidbody>();
+            if (rigidBody.mass > minRigidbodyMassKinetic * boundaryMassMult && rigidBody.velocity.sqrMagnitude < Mathf.Epsilon)
+            {
+                rigidBody.isKinematic = true;
+            }
+
+            if (rigidBody.mass < minMassDestroy * boundaryMassMult)
+            {
+                part.gameObject.AddComponent<ClearGameObject>().SetWaiTime(20f);
+            }
+
+            if (rigidBody.mass < minRigidbodyQuickDestroy * boundaryMassMult)
+            {
+                part.gameObject.AddComponent<ClearGameObject>().SetWaiTime(5f);
+            }
+        }
+    }
+
+    private static List<PartMeshData> GeneratePartMeshes(GameObject gameObject, Vector3 breakPoint, Vector3 breakVector)
+    {
+        // Crate the mesh data structure out of the main cut object
+        var partMeshData = CreatePartMeshData(gameObject);
+        var planePoint = breakPoint + breakVector;
         
         #if UNITY_EDITOR
-        var planeWorldNormal = hitPoint - cutGameObject.transform.position;
+        var planeWorldNormal = breakPoint - gameObject.transform.position;
         DrawPlane(planeWorldNormal, planePoint, Color.green);
         #endif
         
-        planePoint = cutGameObject.transform.InverseTransformPoint(planePoint);
-        var planeNormal = cutGameObject.transform.InverseTransformPoint(hitPoint);
+        planePoint = gameObject.transform.InverseTransformPoint(planePoint);
+        var planeNormal = gameObject.transform.InverseTransformPoint(breakPoint);
         
-        parts = CutPartMeshData(planePoint, planeNormal, parts);
-        return parts;
+        // cut the parts based on the plant point and normal
+        return CutPartMeshData(planePoint, planeNormal, partMeshData);
     }
     
-    private static List<PartMesh> GenerateRandomCutMesh(GameObject cutGameObject, int cutCount)
+    private static List<PartMeshData> GenerateRandomPartMeshes(GameObject cutGameObject, int cutCount)
     {
-        var parts = CreatePartMeshData(cutGameObject);
-        var centerOfMesh = cutGameObject.transform.TransformPoint(parts[0].MeshLocalCenter);
-//        var startNormal = Random.insideUnitSphere;
+        // Crate the mesh data structure out of the main cut object
+        var meshData = CreatePartMeshData(cutGameObject);
+        var partMeshDatas = new List<PartMeshData> {meshData};
         for (int i = 0; i < cutCount; i++)
         {
-            var planePoint = cutGameObject.transform.InverseTransformPoint(centerOfMesh);
+            var planePoint = cutGameObject.transform.InverseTransformPoint(meshData.MeshWorldCenter);
             var normal = Random.insideUnitSphere;
-            parts = CutPartMeshData(planePoint, normal, parts);
+            partMeshDatas = CutPartMeshData(planePoint, normal, partMeshDatas);
             
             #if UNITY_EDITOR
-            DrawPlane(normal - cutGameObject.transform.position, centerOfMesh, Color.green);
+            DrawPlane(normal - cutGameObject.transform.position, meshData.MeshWorldCenter, Color.green);
             #endif
         }
-        return parts;
-    }
-    
-    private static List<PartMesh> CreatePartMeshData(GameObject hitGameObject)
-    {
-        var originalMesh = hitGameObject.GetComponent<MeshFilter>().mesh;
-        originalMesh.RecalculateBounds();
-        var parts = new List<PartMesh>();
-
-        var mainPart = new PartMesh
-        {
-            UV = originalMesh.uv,
-            Vertices = originalMesh.vertices,
-            Normals = originalMesh.normals,
-            Triangles = new int[originalMesh.subMeshCount][]
-        };
-        
-        for (int i = 0; i < originalMesh.subMeshCount; i++)
-            mainPart.Triangles[i] = originalMesh.GetTriangles(i);
-
-        mainPart.UpdateMeshLocalCenter();
-        parts.Add(mainPart);
-        return parts;
+        return partMeshDatas;
     }
 
-    private static List<PartMesh> CutPartMeshData(Vector3 planePoint, Vector3 planeNormal, List<PartMesh> parts)
+    private static List<PartMeshData> CutPartMeshData(Vector3 planePoint, Vector3 planeNormal, PartMeshData part)
     {
-        var subParts = new List<PartMesh>();
+        return CutPartMeshData(planePoint, planeNormal, new List<PartMeshData>{part});
+    }
+
+    private static List<PartMeshData> CutPartMeshData(Vector3 planePoint, Vector3 planeNormal, List<PartMeshData> parts)
+    {
+        var subParts = new List<PartMeshData>();
         for (var i = 0; i < parts.Count; i++)
         {   
             var plane = new Plane(planeNormal, planePoint);
@@ -132,37 +167,35 @@ public class MeshDestroy
         return subParts;
     }
     
-    private static void SpawnParts(GameObject hitGameObject, List<PartMesh> parts)
+    private static void SpawnParts(GameObject gameObject, List<PartMeshData> partMeshDatas)
     {
-        foreach (var part in parts)
+        foreach (var part in partMeshDatas)
         {
-            part.MakeGameobject(hitGameObject);
+            part.CreateGameObject(gameObject);
         }
-
-        GameObject.Destroy(hitGameObject);
     }
     
-    private static PartMesh GetClosestPartToHitPoint(Vector3 hitPoint, List<PartMesh> parts)
+    private static PartMeshData GetClosestPartMeshDataToPos(Vector3 worldPosition, List<PartMeshData> partMeshDatas)
     {
-        PartMesh closestPart = null;
+        PartMeshData closestMeshData = null;
         var minDistance = float.MaxValue;
 
-        foreach (var part in parts)
+        foreach (var part in partMeshDatas)
         {
-            var sqrDistance = (part.MeshCenterToWord - hitPoint).sqrMagnitude;
-            if (closestPart == null || sqrDistance < minDistance)
+            var sqrDistance = (part.MeshWorldCenter - worldPosition).sqrMagnitude;
+            if (closestMeshData == null || sqrDistance < minDistance)
             {
-                closestPart = part;
+                closestMeshData = part;
                 minDistance = sqrDistance;
             }
         }
 
-        return closestPart;
+        return closestMeshData;
     }
     
-    private static PartMesh GenerateMesh(PartMesh original, Plane plane, bool left)
+    private static PartMeshData GenerateMesh(PartMeshData original, Plane plane, bool left)
     {
-        var partMesh = new PartMesh();
+        var partMeshData = new PartMeshData();
         var ray1 = new Ray();
         var ray2 = new Ray();
 
@@ -184,7 +217,7 @@ public class MeshDestroy
                 }
                 if (sideCount == 3)
                 {
-                    partMesh.AddTriangle(i,
+                    partMeshData.AddTriangle(i,
                                          original.Vertices[triangles[j]], original.Vertices[triangles[j + 1]], original.Vertices[triangles[j + 2]],
                                          original.Normals[triangles[j]], original.Normals[triangles[j + 1]], original.Normals[triangles[j + 2]],
                                          original.UV[triangles[j]], original.UV[triangles[j + 1]], original.UV[triangles[j + 2]]);
@@ -207,7 +240,7 @@ public class MeshDestroy
                 var lerp2 = enter2 / dir2.magnitude;
 
                 AddEdge(i,
-                        partMesh,
+                        partMeshData,
                         left ? plane.normal * -1f : plane.normal,
                         ray1.origin + ray1.direction.normalized * enter1,
                         ray2.origin + ray2.direction.normalized * enter2,
@@ -216,7 +249,7 @@ public class MeshDestroy
                 
                 if (sideCount == 1)
                 {
-                    partMesh.AddTriangle(i,
+                    partMeshData.AddTriangle(i,
                                         original.Vertices[triangles[j + singleIndex]],
                                         ray1.origin + ray1.direction.normalized * enter1,
                                         ray2.origin + ray2.direction.normalized * enter2,
@@ -232,7 +265,7 @@ public class MeshDestroy
 
                 if (sideCount == 2)
                 {
-                    partMesh.AddTriangle(i,
+                    partMeshData.AddTriangle(i,
                                         ray1.origin + ray1.direction.normalized * enter1,
                                         original.Vertices[triangles[j + ((singleIndex + 1) % 3)]],
                                         original.Vertices[triangles[j + ((singleIndex + 2) % 3)]],
@@ -242,7 +275,7 @@ public class MeshDestroy
                                         Vector2.Lerp(original.UV[triangles[j + singleIndex]], original.UV[triangles[j + ((singleIndex + 1) % 3)]], lerp1),
                                         original.UV[triangles[j + ((singleIndex + 1) % 3)]],
                                         original.UV[triangles[j + ((singleIndex + 2) % 3)]]);
-                    partMesh.AddTriangle(i,
+                    partMeshData.AddTriangle(i,
                                         ray1.origin + ray1.direction.normalized * enter1,
                                         original.Vertices[triangles[j + ((singleIndex + 2) % 3)]],
                                         ray2.origin + ray2.direction.normalized * enter2,
@@ -257,29 +290,28 @@ public class MeshDestroy
             }
         }
 
-        if (partMesh.IsValidMesh())
+        if (partMeshData.IsValid())
         {
-            partMesh.FillArrays();
-            return partMesh;
+            partMeshData.FillArrays();
+            return partMeshData;
         }
         
         return null;
     }
 
-    private static void AddEdge(int subMesh, PartMesh partMesh, Vector3 normal, Vector3 vertex1, Vector3 vertex2, Vector2 uv1, Vector2 uv2)
+    private static void AddEdge(int subMesh, PartMeshData partMeshData, Vector3 normal, Vector3 vertex1, Vector3 vertex2, Vector2 uv1, Vector2 uv2)
     {
         if (!edgeSet)
         {
             edgeSet = true;
             edgeVertex = vertex1;
-            edgeUV = uv1;
         }
         else
         {
             edgePlane.Set3Points(edgeVertex, vertex1, vertex2);
             
             // don't give texture to internal meshes
-            partMesh.AddTriangle(subMesh,
+            partMeshData.AddTriangle(subMesh,
             edgeVertex,
             edgePlane.GetSide(edgeVertex + normal) ? vertex1 : vertex2,
             edgePlane.GetSide(edgeVertex + normal) ? vertex2 : vertex1,
@@ -313,33 +345,22 @@ public class MeshDestroy
         Debug.DrawRay(position, normal, Color.red);
     }
 
-    public class PartMesh
+    public class PartMeshData
     {
-        private List<Vector3> _Verticies = new List<Vector3>();
-        private List<Vector3> _Normals = new List<Vector3>();
-        private List<List<int>> _Triangles = new List<List<int>>();
-        private List<Vector2> _UVs = new List<Vector2>();
         public Vector3[] Vertices;
         public Vector3[] Normals;
         public int[][] Triangles;
         public Vector2[] UV;
         public GameObject gameObject;
+        public Vector3 MeshWorldCenter => gameObject.GetComponent<Renderer>().bounds.center;
+        
+        private List<Vector3> _Verticies = new List<Vector3>();
+        private List<Vector3> _Normals = new List<Vector3>();
+        private List<List<int>> _Triangles = new List<List<int>>();
+        private List<Vector2> _UVs = new List<Vector2>();
         private Vector2 xBoundaries = new Vector2(1000, -1000);
         private Vector2 yBoundaries = new Vector2(1000, -1000);
         private Vector2 zBoundaries = new Vector2(1000, -1000);
-
-        public Vector3 MeshLocalCenter;
-        public Vector3 MeshCenterToWord => gameObject.transform.TransformPoint(MeshLocalCenter / _UVs.Count);
-
-        public void UpdateMeshLocalCenter()
-        {
-            foreach (var verticy in Vertices)
-            {
-                MeshLocalCenter += verticy;
-            }
-
-            MeshLocalCenter /= Vertices.Length;
-        }
 
         public void AddTriangle(int submesh, Vector3 vert1, Vector3 vert2, Vector3 vert3, Vector3 normal1, Vector3 normal2, Vector3 normal3, Vector2 uv1, Vector2 uv2, Vector2 uv3)
         {
@@ -358,8 +379,6 @@ public class MeshDestroy
             _UVs.Add(uv1);
             _UVs.Add(uv2);
             _UVs.Add(uv3);
-
-            MeshLocalCenter += vert1 + vert2 + vert3;
 
             xBoundaries.x = Mathf.Min(xBoundaries.x, vert1.x);
             xBoundaries.y = Mathf.Max(xBoundaries.y, vert1.x);
@@ -389,7 +408,7 @@ public class MeshDestroy
             zBoundaries.y = Mathf.Max(zBoundaries.y, vert3.z);
         }
 
-        public bool IsValidMesh()
+        public bool IsValid()
         {
             return _Triangles.Count > 0;
         }
@@ -404,7 +423,7 @@ public class MeshDestroy
                 Triangles[i] = _Triangles[i].ToArray();
         }
 
-        public void MakeGameobject(GameObject original)
+        public void CreateGameObject(GameObject original)
         {
             gameObject = new GameObject(original.name);
             gameObject.transform.position = original.transform.position;
@@ -420,8 +439,6 @@ public class MeshDestroy
             for(var i = 0; i < Triangles.Length; i++)
                 mesh.SetTriangles(Triangles[i], i, true);
             
-//            mesh.bounds = new Bounds(MeshLocalCenter, boundBox);
-            
             var renderer = gameObject.AddComponent<MeshRenderer>();
             var originalRender = original.GetComponent<MeshRenderer>();
             renderer.materials = originalRender.materials;
@@ -429,6 +446,7 @@ public class MeshDestroy
             renderer.lightProbeUsage = originalRender.lightProbeUsage;
             renderer.reflectionProbeUsage = originalRender.reflectionProbeUsage;
             renderer.castShadows = originalRender.castShadows;
+            renderer.allowOcclusionWhenDynamic = originalRender.allowOcclusionWhenDynamic;
 
             var filter = gameObject.AddComponent<MeshFilter>();
             filter.mesh = mesh;
@@ -438,7 +456,7 @@ public class MeshDestroy
 
             var rigidbody = gameObject.AddComponent<Rigidbody>();
             rigidbody.velocity = original.GetComponent<Rigidbody>().velocity;
-            rigidbody.mass = (xBoundaries.y - xBoundaries.x) * (yBoundaries.y - yBoundaries.x) * (zBoundaries.y - zBoundaries.x);
+            rigidbody.mass = (xBoundaries.y - xBoundaries.x) * (yBoundaries.y - yBoundaries.x) * (zBoundaries.y - zBoundaries.x) * boundaryMassMult;
             var clearComponent = original.GetComponent<ClearGameObject>();
             if (clearComponent != null)
             {

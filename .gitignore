@@ -1,1 +1,4 @@
 *.apk
+/Library/*
+Library/*
+/Temp/*

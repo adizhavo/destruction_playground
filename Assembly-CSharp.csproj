@@ -53,23 +53,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Fx Explosion Pack\Script\csDemoScenceControl.cs" />
-    <Compile Include="Assets\Fx Explosion Pack\Script\csLightControl.cs" />
-    <Compile Include="Assets\Fx Explosion Pack\Script\csMouseOrbit.cs" />
-    <Compile Include="Assets\Fx Explosion Pack\Script\DestroyEffect.cs" />
+    <Compile Include="Assets\Prefab\explosion pack\Script\csDemoScenceControl.cs" />
+    <Compile Include="Assets\Prefab\explosion pack\Script\csLightControl.cs" />
+    <Compile Include="Assets\Prefab\explosion pack\Script\csMouseOrbit.cs" />
+    <Compile Include="Assets\Prefab\explosion pack\Script\DestroyEffect.cs" />
     <Compile Include="Assets\Scripts\Bullet.cs" />
     <Compile Include="Assets\Scripts\ClearGameObject.cs" />
     <Compile Include="Assets\Scripts\DestroyDelay.cs" />
     <Compile Include="Assets\Scripts\FadeOut.cs" />
     <Compile Include="Assets\Scripts\HitRay.cs" />
-    <Compile Include="Assets\Scripts\MeshColliderTools.cs" />
     <Compile Include="Assets\Scripts\MeshDestroy.cs" />
-    <Compile Include="Assets\Scripts\OptimizeMesh.cs" />
-    <Compile Include="Assets\Scripts\ScaleOut.cs" />
-    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Emissive Diffuse.shader" />
-    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump Cutout.shader" />
-    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Standard Diffuse Bump.shader" />
-    <None Include="Assets\Ciconia Studio\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump.shader" />
+    <None Include="Assets\Shaders\Double Sided Shaders\Double Sided Emissive Diffuse.shader" />
+    <None Include="Assets\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump Cutout.shader" />
+    <None Include="Assets\Shaders\Double Sided Shaders\Double Sided Standard Diffuse Bump.shader" />
+    <None Include="Assets\Shaders\Double Sided Shaders\Double Sided Transparent Diffuse Bump.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Users/adizhavo/Desktop/ShredCastle/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
