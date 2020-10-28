@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8119963d454743379f6010c1553a895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPower: 2
+  hitPower: 3
   hitRange: 0.4
   movementSpeed: 6
   spawnDistance: 15
