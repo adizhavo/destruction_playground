@@ -1,0 +1,5 @@
+
+THIS IS A MIRROR OF Assets/csc.rsp FILE WITH ADDITIONAL INFO
+
+'reference' Required by following packages: gramgames/core
+-r:System.Net.Http.dll -r:System.Security.dll

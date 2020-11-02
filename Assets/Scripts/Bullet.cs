@@ -6,7 +6,6 @@ public class Bullet : MonoBehaviour
     public float hitPower;
     public float hitRange;
     public float movementSpeed;
-    public float spawnDistance;
     public float spawnHeight;
     public GameObject explosion;
 
@@ -15,7 +14,7 @@ public class Bullet : MonoBehaviour
     
     public void Init(RaycastHit hitRay)
     {
-        transform.position = new Vector3(hitRay.point.x, spawnHeight, hitRay.point.z - spawnDistance);
+        transform.position = new Vector3(hitRay.point.x, spawnHeight, Camera.main.transform.position.z);
         direction = (hitRay.point - transform.position).normalized;
     }
     
@@ -30,31 +29,49 @@ public class Bullet : MonoBehaviour
         if (Physics.Linecast(previous, next, out var raycastHit))
         {
             CreatExplosion(raycastHit);
-            var pieces = new List<MeshDestroy.PartMeshData>();
+            var breakVectorNorm = (raycastHit.point - previous).normalized;
+            BreakCollider(raycastHit, breakVectorNorm);
+            Destroy(gameObject);
+        }
+    }
 
-            var colliders = Physics.OverlapSphere(raycastHit.point, hitRange);
-            foreach (var coll in colliders)
+    private void BreakCollider(RaycastHit raycastHit, Vector3 breakVectorNorm)
+    {
+        var pieces = new List<MeshDestroy.PartMeshData>();
+
+        var colliders = Physics.OverlapSphere(raycastHit.point, hitRange);
+        foreach (var coll in colliders)
+        {
+            if (!coll.transform.CompareTag("Environment") && coll.gameObject != raycastHit.transform.gameObject)
             {
-                if (!coll.transform.CompareTag("Environment") && coll.gameObject != raycastHit.transform.gameObject)
+                var breakVector = coll.transform.position - raycastHit.transform.position;
+                var meshes = MeshDestroy.BreakGameObject(coll.gameObject, raycastHit.point, breakVector);
+                foreach (var mesh in meshes)
+                    pieces.Add(mesh);
+                
+                if (meshes.Count == 0)
                 {
-                    var breakVector = coll.transform.position - raycastHit.transform.position;
-                    var meshes = MeshDestroy.BreakGameObject(coll.transform.gameObject, raycastHit.point, breakVector);
-                    foreach (var mesh in meshes) pieces.Add(mesh);
-                    pieces.Add(MeshDestroy.CreatePartMeshData(coll.gameObject));
+                    var c = MeshDestroy.CreatePartMeshData(coll.gameObject);
+                    pieces.Add(c);
                 }
             }
-            
-            if (!raycastHit.transform.CompareTag("Environment"))
-            {
-                var breakVectorNorm = (raycastHit.point - Camera.main.ScreenToWorldPoint(Input.mousePosition)).normalized;
-                var breakVector = breakVectorNorm * hitRange;
-                var meshes = MeshDestroy.BreakGameObject(raycastHit.transform.gameObject, raycastHit.point, breakVector);
-                foreach (var mesh in meshes) pieces.Add(mesh);
-                pieces.Add(MeshDestroy.CreatePartMeshData(raycastHit.transform.gameObject));
-            }
-            
-            ApplyForceToPieces(pieces, raycastHit.point);
         }
+
+        if (!raycastHit.transform.CompareTag("Environment"))
+        {
+            var breakVector = breakVectorNorm * hitRange;
+            var meshes = MeshDestroy.BreakGameObject(raycastHit.transform.gameObject, raycastHit.point, breakVector);
+            foreach (var mesh in meshes)
+                pieces.Add(mesh);
+            
+            if (meshes.Count == 0)
+            {
+                var c = MeshDestroy.CreatePartMeshData(raycastHit.transform.gameObject);
+                pieces.Add(c);
+            }
+        }
+
+        ApplyForceToPieces(pieces, raycastHit.point);
     }
 
     private void TryDestroyDelay()
@@ -78,9 +95,7 @@ public class Bullet : MonoBehaviour
         foreach (var piece in pieces)
         {
             var rb = piece.gameObject.GetComponent<Rigidbody>();
-            if (!rb.isKinematic) rb.velocity += (piece.MeshWorldCenter - hitpoint).normalized * hitPower;
+            if (!rb.isKinematic) rb.AddForce((piece.MeshWorldCenter - hitpoint).normalized * hitPower, ForceMode.Impulse);
         }
-        
-        Destroy(gameObject);
     }
 }

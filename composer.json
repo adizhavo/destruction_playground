@@ -1,0 +1,18 @@
+{
+    "name": "gramgames/prototypetemplate",
+    "description": "Unity Project Template for Prototypes.",
+    "type": "project",
+    "require": {
+        "gramgames/core-app": "~0.26.0",
+        "sschmid/entitas-unity": "1.5.0p1",
+        "carloswilkes/leantouch": "1.3.4",
+        "flyingworm/editor-console-pro": "3.9.5",
+        "dentedpixel/leantween": "^2.45"
+    },
+    "authors": [
+        {
+            "name": "Oguz",
+            "email": "oguz@gram.gs"
+        }
+    ]
+}

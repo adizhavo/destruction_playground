@@ -1,0 +1,1048 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://ggpd.servogram.io/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "f52cf21f50c7db24aeab0d517ab9a789",
+    "packages": [
+        {
+            "name": "adjust/unity-sdk",
+            "version": "4.18.2",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks-external/adjust-unitysdk.git",
+                "reference": "3f40815953f672a62889dd6b85b51f79c82c991a"
+            },
+            "require": {
+                "android-play-services/basement": "17.*"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "description": "Adjust Unity SDK",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2019-10-23T09:12:09+00:00"
+        },
+        {
+            "name": "android-play-services/basement",
+            "version": "17.0.0",
+            "require": {
+                "android-x/collection-collection": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/fragment-fragment": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "play-services-basement",
+                "version": "17.0.0",
+                "provider": "play-services",
+                "gradle": {
+                    "name": "com.google.android.gms:play-services-basement"
+                }
+            },
+            "description": "The Google Play Service Package: android-play-services/basement",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/annotation-annotation",
+            "version": "1.0.0",
+            "type": "android-library",
+            "extra": {
+                "type": "jar",
+                "name": "annotation",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.annotation:annotation"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/annotation-annotation",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/asynclayoutinflater-asynclayoutinflater",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "asynclayoutinflater",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.asynclayoutinflater:asynclayoutinflater"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/asynclayoutinflater-asynclayoutinflater",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/collection-collection",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "jar",
+                "name": "collection",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.collection:collection"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/collection-collection",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/coordinatorlayout-coordinatorlayout",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/customview-customview": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "coordinatorlayout",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.coordinatorlayout:coordinatorlayout"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/coordinatorlayout-coordinatorlayout",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/core-core",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/collection-collection": ">=1.0.0",
+                "android-x/lifecycle-lifecycle-runtime": ">=2.0.0",
+                "android-x/versionedparcelable-versionedparcelable": ">=1.0.0"
+            },
+            "conflict": {
+                "android-support/compat": "*",
+                "android-support/v4": "*"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "core",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.core:core"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/core-core",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/cursoradapter-cursoradapter",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "cursoradapter",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.cursoradapter:cursoradapter"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/cursoradapter-cursoradapter",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/customview-customview",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "customview",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.customview:customview"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/customview-customview",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/documentfile-documentfile",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "documentfile",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.documentfile:documentfile"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/documentfile-documentfile",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/drawerlayout-drawerlayout",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/customview-customview": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "drawerlayout",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.drawerlayout:drawerlayout"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/drawerlayout-drawerlayout",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/fragment-fragment",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/legacy-legacy-support-core-ui": ">=1.0.0",
+                "android-x/legacy-legacy-support-core-utils": ">=1.0.0",
+                "android-x/lifecycle-lifecycle-viewmodel": ">=2.0.0",
+                "android-x/loader-loader": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "fragment",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.fragment:fragment"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/fragment-fragment",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/interpolator-interpolator",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "interpolator",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.interpolator:interpolator"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/interpolator-interpolator",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/legacy-legacy-support-core-ui",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/asynclayoutinflater-asynclayoutinflater": ">=1.0.0",
+                "android-x/coordinatorlayout-coordinatorlayout": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/cursoradapter-cursoradapter": ">=1.0.0",
+                "android-x/customview-customview": ">=1.0.0",
+                "android-x/drawerlayout-drawerlayout": ">=1.0.0",
+                "android-x/interpolator-interpolator": ">=1.0.0",
+                "android-x/legacy-legacy-support-core-utils": ">=1.0.0",
+                "android-x/slidingpanelayout-slidingpanelayout": ">=1.0.0",
+                "android-x/swiperefreshlayout-swiperefreshlayout": ">=1.0.0",
+                "android-x/viewpager-viewpager": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "legacy-support-core-ui",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.legacy:legacy-support-core-ui"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/legacy-legacy-support-core-ui",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/legacy-legacy-support-core-utils",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/documentfile-documentfile": ">=1.0.0",
+                "android-x/loader-loader": ">=1.0.0",
+                "android-x/localbroadcastmanager-localbroadcastmanager": ">=1.0.0",
+                "android-x/print-print": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "legacy-support-core-utils",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.legacy:legacy-support-core-utils"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/legacy-legacy-support-core-utils",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/lifecycle-lifecycle-common",
+            "version": "2.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "jar",
+                "name": "lifecycle-common",
+                "version": "2.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.lifecycle:lifecycle-common"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/lifecycle-lifecycle-common",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/lifecycle-lifecycle-livedata",
+            "version": "2.0.0",
+            "require": {
+                "android-x/lifecycle-lifecycle-livedata-core": ">=2.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "lifecycle-livedata",
+                "version": "2.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.lifecycle:lifecycle-livedata"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/lifecycle-lifecycle-livedata",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/lifecycle-lifecycle-livedata-core",
+            "version": "2.0.0",
+            "require": {
+                "android-x/lifecycle-lifecycle-common": ">=2.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "lifecycle-livedata-core",
+                "version": "2.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.lifecycle:lifecycle-livedata-core"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/lifecycle-lifecycle-livedata-core",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/lifecycle-lifecycle-runtime",
+            "version": "2.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/lifecycle-lifecycle-common": ">=2.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "lifecycle-runtime",
+                "version": "2.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.lifecycle:lifecycle-runtime"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/lifecycle-lifecycle-runtime",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/lifecycle-lifecycle-viewmodel",
+            "version": "2.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "lifecycle-viewmodel",
+                "version": "2.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.lifecycle:lifecycle-viewmodel"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/lifecycle-lifecycle-viewmodel",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/loader-loader",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/lifecycle-lifecycle-livedata": ">=2.0.0",
+                "android-x/lifecycle-lifecycle-viewmodel": ">=2.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "loader",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.loader:loader"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/loader-loader",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/localbroadcastmanager-localbroadcastmanager",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "localbroadcastmanager",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.localbroadcastmanager:localbroadcastmanager"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/localbroadcastmanager-localbroadcastmanager",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/print-print",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "print",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.print:print"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/print-print",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/slidingpanelayout-slidingpanelayout",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/customview-customview": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "slidingpanelayout",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.slidingpanelayout:slidingpanelayout"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/slidingpanelayout-slidingpanelayout",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/swiperefreshlayout-swiperefreshlayout",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/interpolator-interpolator": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "swiperefreshlayout",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.swiperefreshlayout:swiperefreshlayout"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/swiperefreshlayout-swiperefreshlayout",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/versionedparcelable-versionedparcelable",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/collection-collection": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "versionedparcelable",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.versionedparcelable:versionedparcelable"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/versionedparcelable-versionedparcelable",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "android-x/viewpager-viewpager",
+            "version": "1.0.0",
+            "require": {
+                "android-x/annotation-annotation": ">=1.0.0",
+                "android-x/core-core": ">=1.0.0",
+                "android-x/customview-customview": ">=1.0.0"
+            },
+            "type": "android-library",
+            "extra": {
+                "type": "aar",
+                "name": "viewpager",
+                "version": "1.0.0",
+                "provider": "x",
+                "gradle": {
+                    "name": "androidx.viewpager:viewpager"
+                }
+            },
+            "description": "The AndroidX Library Package: android-x/viewpager-viewpager",
+            "android-projects": [],
+            "nuget-packages": []
+        },
+        {
+            "name": "carloswilkes/leantouch",
+            "version": "1.3.4",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks-external/carloswilkes-leantouch.git",
+                "reference": "637ebafcd4ff648a297999c7ae8b19267c7934fe"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "description": "Lean Touch is an input library that makes handling gestures (e.g. Pinch, Twist) incredibly easy across all devices and resolutions.",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2018-02-14T12:22:19+00:00"
+        },
+        {
+            "name": "dentedpixel/leantween",
+            "version": "2.50",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks-external/dentedpixel-leantween.git",
+                "reference": "080806e56f989a4e4f1be8f553b89101e6d7963c"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "authors": [
+                {
+                    "name": "Dented Pixel",
+                    "email": "info@dentedpixel.com"
+                }
+            ],
+            "description": "LeanTween is an efficient tweening engine for the Unity 3d engine",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2019-03-13T13:05:13+00:00"
+        },
+        {
+            "name": "flyingworm/editor-console-pro",
+            "version": "3.9.5",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks-external/flyingworm-editor-console-pro.git",
+                "reference": "c7432bbc3ff7e5045d398ce90ad7b2e0f704791e"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "description": "Editor Console Pro",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2018-07-23T08:14:48+00:00"
+        },
+        {
+            "name": "gramgames/abtestservice",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/abtestservice-sdk.git",
+                "reference": "23b87b42e52b94d94f009bd8059e4ea11a334715"
+            },
+            "require": {
+                "gramgames/core": "~2.4.0",
+                "gramgames/logger": "~1.2.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Engin Erenturk",
+                    "email": "engin@gram.gs",
+                    "role": "Developer"
+                }
+            ],
+            "description": "AB Test client SDK package.",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-01-27T15:40:37+00:00"
+        },
+        {
+            "name": "gramgames/analytics",
+            "version": "3.9.0",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/analyticsservice-sdk.git",
+                "reference": "824c7aff1b3576b34a1dc7437ed1c697ab944495"
+            },
+            "require": {
+                "adjust/unity-sdk": "~4.18.2",
+                "gramgames/core": "~2.4.0",
+                "gramgames/database": "~3.6.0",
+                "gramgames/logger": "~1.2.0",
+                "gramgames/userservice": "~3.6.0",
+                "newtonsoft/json": "~9.0"
+            },
+            "require-dev": {
+                "unity-dev/runtime": "~5.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Analytics Service Client Library for Servogram.",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-01-27T16:30:06+00:00"
+        },
+        {
+            "name": "gramgames/complianceservice-sdk",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/complianceservice-sdk.git",
+                "reference": "1a28e8a8332a05fc59d652cc8839ed666a73fecb"
+            },
+            "require": {
+                "gramgames/analytics": "^3.9",
+                "gramgames/core": "~2.4.0",
+                "gramgames/instruments-sdk": "~0.5.0"
+            },
+            "require-dev": {
+                "gramgames/changelog-generator": "1.2.2",
+                "gramgames/csproj-generator": "1.3",
+                "unity-dev/runtime": "2018.4.14f1",
+                "unity/textmeshpro": "5.6"
+            },
+            "suggest": {
+                "unity/textmeshpro": "5.6"
+            },
+            "type": "framework",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Engin Erenturk",
+                    "email": "engin@gram.gs"
+                },
+                {
+                    "name": "Ayla Kara Coban",
+                    "email": "ayla@gram.gs"
+                },
+                {
+                    "name": "Firat Agdas",
+                    "email": "firat@gram.gs"
+                },
+                {
+                    "name": "Erman Erol",
+                    "email": "erman@gram.gs"
+                }
+            ],
+            "description": "GramGames Compliance implementation.",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-05-28T10:59:12+00:00"
+        },
+        {
+            "name": "gramgames/core",
+            "version": "2.4.4",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/core.git",
+                "reference": "80b6bc8033c573d21cb1d2a78e8acc0bd9054e91"
+            },
+            "require": {
+                "gramgames/logger": "~1.2.6",
+                "newtonsoft/json": "~9.0"
+            },
+            "require-dev": {
+                "gramgames/changelog-generator": "1.2.2",
+                "gramgames/csproj-generator": "1.2",
+                "unity-dev/runtime": "2018.4.14f1"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Engin Erenturk",
+                    "email": "engin@gram.gs",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Gram Framework core package..",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-04-09T15:56:20+00:00"
+        },
+        {
+            "name": "gramgames/core-app",
+            "version": "0.26.5",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/core-app.git",
+                "reference": "cb751ed0bf7cefe5fb5a8836ac72b38a5142097c"
+            },
+            "require": {
+                "gramgames/abtestservice": "~2.6.0",
+                "gramgames/analytics": "~3.9.0",
+                "gramgames/complianceservice-sdk": "~1.1.0",
+                "gramgames/core": "~2.4.0",
+                "gramgames/core-build": "~1.11.0",
+                "gramgames/database": "~3.6.0",
+                "gramgames/logger": "~1.2.0",
+                "gramgames/userservice": "~3.6.0"
+            },
+            "type": "framework",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Engin Erenturk",
+                    "email": "engin@gram.gs",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Firat Agdas",
+                    "email": "firat@gram.gs",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Gram Core package contains application service which manages the common configuraiton and data for all applications in Gram Games ecosystem.",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-04-30T16:48:20+00:00"
+        },
+        {
+            "name": "gramgames/core-build",
+            "version": "1.11.0",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/core-build.git",
+                "reference": "f155266d06e82776816938b4ed59eb904fb26f60"
+            },
+            "require": {
+                "unity/xcodeapi": "~2017.1"
+            },
+            "conflict": {
+                "ggpd": "<1.7"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Utils package for GramGames Build tools. Contains utility classes and data structures without any dependency other than System.",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-03-25T11:39:41+00:00"
+        },
+        {
+            "name": "gramgames/database",
+            "version": "3.6.2",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/databaseservice.git",
+                "reference": "778b1c1eb136fbf498dc2a570e24d4a9f74f1ed7"
+            },
+            "require": {
+                "gramgames/core": "~2.4.0",
+                "gramgames/logger": "~1.2.6",
+                "gramgames/sqlite-unity": "^2.0"
+            },
+            "require-dev": {
+                "gramgames/changelog-generator": "1.2.2",
+                "gramgames/csproj-generator": "1.2",
+                "unity-dev/runtime": "2018.4.14f1"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Database service",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-03-11T14:36:03+00:00"
+        },
+        {
+            "name": "gramgames/instruments-sdk",
+            "version": "0.5.1",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/instrumentsservice-sdk.git",
+                "reference": "8edd25a565e6f1f017fa89a2cfa391413520223e"
+            },
+            "require": {
+                "gramgames/core": "~2.4.0",
+                "gramgames/logger": "~1.2.0"
+            },
+            "require-dev": {
+                "gramgames/changelog-generator": "1.2.2",
+                "gramgames/csproj-generator": "1.3",
+                "unity-dev/runtime": "2018.4.14f1"
+            },
+            "type": "framework",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Engin Erenturk",
+                    "email": "engin@gram.gs"
+                }
+            ],
+            "description": "Gram Games Instruments Service SDK",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-03-04T09:46:02+00:00"
+        },
+        {
+            "name": "gramgames/logger",
+            "version": "1.2.6",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/gram-logger.git",
+                "reference": "edd64d775043f038a5d76ec640025e3691a1aa15"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Logger library for GramGames",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2019-05-03T08:48:55+00:00"
+        },
+        {
+            "name": "gramgames/sqlite-unity",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/sqlite-unity.git",
+                "reference": "264adef80f1ef2315fee6c66d53e42261365a476"
+            },
+            "type": "framework",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "authors": [
+                {
+                    "name": "Jeremy Glazman",
+                    "email": "jeremy@gram.gs"
+                }
+            ],
+            "description": "Native plugins for SQLite in Unity.",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-01-16T12:42:21+00:00"
+        },
+        {
+            "name": "gramgames/userservice",
+            "version": "3.6.2",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks/userservice.git",
+                "reference": "688290e27a999f0d8efc5b6dce3f9c19148a12ba"
+            },
+            "require": {
+                "gramgames/core": "~2.4.0",
+                "gramgames/database": "~3.6.1",
+                "gramgames/logger": "~1.2.6"
+            },
+            "require-dev": {
+                "gramgames/changelog-generator": "1.2.2",
+                "gramgames/csproj-generator": "1.2",
+                "unity-dev/runtime": "2018.4.14f1"
+            },
+            "type": "framework",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Engin Erenturk",
+                    "email": "engin@gram.gs"
+                }
+            ],
+            "description": "Gram Games Framework user service.",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-04-02T13:28:45+00:00"
+        },
+        {
+            "name": "newtonsoft/json",
+            "version": "9.0.1",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks-external/newtonsoft-json.git",
+                "reference": "d1568123f7b349b32b8f9c5c3df481cae25237ca"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Popular high-performance JSON framework for .NET",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2016-12-19T15:37:24+00:00"
+        },
+        {
+            "name": "sschmid/entitas-unity",
+            "version": "1.5.0p1",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks-external/sschmid-entitasunity.git",
+                "reference": "bddd01312faaea064159679c8b8288c2b63ec5d1"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "description": "Entitas library for Unity",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2018-04-10T08:50:59+00:00"
+        },
+        {
+            "name": "unity/xcodeapi",
+            "version": "2017.1-p2",
+            "source": {
+                "type": "git",
+                "url": "git@git.servogram.io:client-frameworks-external/unity-xcodeapi.git",
+                "reference": "c25a9f0839e8b24c1c84d6c546f73058fb31c3cc"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.servogram.io/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Unity Technologies",
+                    "email": "info@unity3d.com"
+                }
+            ],
+            "description": "Xcode Manipulation module maintained by the Unity mobile team.",
+            "android-projects": [],
+            "nuget-packages": [],
+            "time": "2020-09-22T10:32:59+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
